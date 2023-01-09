@@ -1,12 +1,16 @@
 import time
-from typing import Tuple, Union
-
 import serial
 from serial.tools import list_ports
 
+ERR_MSG = """
+No Arduino or compatible devices found, check your device is connected.
+If it is, check the vendor id; at the moment we support only 2341 and 1a86 vendors.
+(On Linux use lsusb to list serial devices)
+"""
+
 
 class ArduinoError(Exception):
-    msg = ""
+    pass
 
 
 class Arduino:
@@ -24,8 +28,8 @@ class Arduino:
                 time.sleep(2)
                 break
 
-        if not port:
-            raise ArduinoError()
+        if not self.port:
+            raise ArduinoError(ERR_MSG)
 
     def write(self, payload):
         self.port.write(payload)
