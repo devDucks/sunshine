@@ -4,7 +4,13 @@ Sunshine is an open source protocol to drive an electronic camera rotator for as
 You can find here the firmware that can be flashed on Arduino that implements the protocol.
 
 ## Protocol spec
-TODO
+Every command and response starts with a `:` and ends with a `#`
+
+Look at the table for the specific commands
+
+| Code | Response | Description |
+|------|----------|-------------|
+| :P#  | :OK# | Ping command, nothign more, nothing less |
 
 ## Development
 This firmware has 0 dependencies on external Arduino libraries.
