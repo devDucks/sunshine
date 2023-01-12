@@ -32,56 +32,64 @@ void parse_command(char cmd[])
     return;
   }
 
-  if (cmd[1] == 'P') {
-    Serial.write(":OK#");
-    return;
-  }
-
-  if (cmd[1] == 'T') {
-    test_move();
-    return;
-  }
-
-  if (cmd[1] == 'D') {
-    if (cmd[2] == '0') {
-      digitalWrite(DIR, LOW);
-      return;
-    }
-
-    if (cmd[2] == '1') {
-      digitalWrite(DIR, HIGH);
-      return;
-    }
-
-    if (cmd[2] == 'R') {
-      int val = digitalRead(DIR);
-      if (val == 0) {
-        Serial.write(":D0#");
-      } else {
-        Serial.write(":D1#");
+  switch (cmd[1]) {
+    // Case 'P'
+    case 80:
+      Serial.write(":OK#");
+      break;
+    // Case 'T'
+    case 84:
+      test_move();
+      break;
+    // Case 'V'
+    case 86:
+      Serial.write(version);
+      break;
+    // Case 'D'
+    case 68:
+      switch (cmd[2]) {
+        // Case '0'
+        case 48:
+          digitalWrite(DIR, LOW);
+          Serial.write(":OK#");
+          break;
+        // Case '1'
+        case 49:
+          digitalWrite(DIR, HIGH);
+          Serial.write(":OK#");
+          break;
+        // Case 'R'
+        case 82:
+          int val = digitalRead(DIR);
+          if (val == 0) {
+            Serial.write(":D0#");
+          } else {
+            Serial.write(":D1#");
+          }
+          break;
+        // Errors
+        default:
+          Serial.write(":E4#");
+          break;
       }
-      return;
-    }
+      break;
+    // Case 'M'
+    case 77:
+      switch (cmd[2]) {
+        // Case 'R'
+        case 82:
+          Serial.write(":MR#");
+          break;
+        // Case 'L'
+        case 76:
+          Serial.write(":ML#");
+          break;
+      }
+      break;
+    // Errors
+    default:
+      Serial.write(":E3#");
+      break;
   }
-
-  if (cmd[1] == 'M') {
-    if (cmd[2] == 'R') {
-      Serial.write(":MR#");
-      return;
-    }
-
-    if (cmd[2] == 'L') {
-      Serial.write(":ML#");
-      return;
-    }
-  }
-
-  if (cmd[1] == 'V') {
-    Serial.write(version);
-    return;
-  }
-
-  Serial.write(":E3#");
 }
-
 #endif
