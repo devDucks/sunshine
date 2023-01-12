@@ -20,7 +20,7 @@ void setup() {
 void loop() {
   // send data only when you receive data:
   if (!Serial.available()) {
-    delay(100);
+    delay(10);
   } else {
     while (Serial.available() && !eoc) {
       tempByte = Serial.read();
