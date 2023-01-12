@@ -33,18 +33,22 @@ def test_version_command(arduino):
 
 def test_direction_command(arduino):
     arduino.write(b":DR#")
-    response = arduino.read_all()
+    response = arduino.read_until()
     assert response == b":D1#"
     time.sleep(1.0)
 
     arduino.write(b":D0#")
+    response = arduino.read_until()
+    assert response == b":OK#"
     arduino.write(b":DR#")
-    response = arduino.read_all()
+    response = arduino.read_until()
     assert response == b":D0#"
 
     time.sleep(1.0)
     # Reset the pull to setup HIGH
     arduino.write(b":D1#")
+    response = arduino.read_until()
+    assert response == b":OK#"
     arduino.write(b":DR#")
     response = arduino.read_all()
     assert response == b":D1#"

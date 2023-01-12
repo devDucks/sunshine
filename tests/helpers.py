@@ -40,3 +40,9 @@ class Arduino:
             time.sleep(0.1)
 
         return self.port.read_all()
+
+    def read_until(self):
+        while not self.port.readable():
+            time.sleep(0.1)
+
+        return self.port.read_until("#")
