@@ -40,6 +40,7 @@ void parse_command(char cmd[])
     // Case 'T'
     case 84:
       test_move();
+      Serial.write(":OK#");
       break;
     // Case 'V'
     case 86:

@@ -12,7 +12,7 @@ void setup() {
   Serial.begin(9600);
   pinMode(STP, OUTPUT);
   pinMode(DIR, OUTPUT);
-  digitalWrite(DIR, HIGH);
+  digitalWrite(DIR, LOW);
   digitalWrite(SLP, HIGH);
   digitalWrite(RST, HIGH);
 }
